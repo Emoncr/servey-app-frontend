@@ -17,6 +17,7 @@ export interface User {
 
 export interface AuthResult {
   user: User;
+  token?: string;
 }
 
 export const QUESTION_TYPES = [

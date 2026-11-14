@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { clearAuthToken, getAuthToken } from "./auth-token";
 
 export interface ApiErrorPayload {
   success: false;
@@ -6,12 +7,24 @@ export interface ApiErrorPayload {
   data: unknown;
 }
 
+const rawEnvUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+const normalizedUrl = (rawEnvUrl || "http://localhost:5000/api").replace(/\/$/, "");
+const baseURL = normalizedUrl.endsWith("/api") ? normalizedUrl : `${normalizedUrl}/api`;
+
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api",
+  baseURL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+api.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  if (token && !config.headers.Authorization) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 api.interceptors.response.use(
@@ -22,7 +35,8 @@ api.interceptors.response.use(
       typeof window !== "undefined" &&
       window.location.pathname.startsWith("/dashboard")
     ) {
-      window.location.assign("/signin");
+      clearAuthToken();
+      window.location.href = "/signin";
     }
     return Promise.reject(error);
   }

@@ -5,7 +5,7 @@ import {
   Building2Icon,
   CalendarClockIcon,
   FileTextIcon,
-  Share2Icon,
+//   Share2Icon,
   Table2Icon,
   TrendingUpIcon,
   UsersIcon,
@@ -40,13 +40,13 @@ export default function DashboardOverviewPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Link
+          {/* <Link
             href="/dashboard/share"
             className={buttonVariants({ variant: "outline", size: "sm" })}
           >
             <Share2Icon />
             Share survey
-          </Link>
+          </Link> */}
           <Link
             href="/dashboard/responses"
             className={buttonVariants({ size: "sm" })}
@@ -138,13 +138,13 @@ export default function DashboardOverviewPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex justify-center">
-                <Link
+                {/* <Link
                   href="/dashboard/share"
                   className={buttonVariants({ size: "sm" })}
                 >
                   <Share2Icon />
                   Get the survey link
-                </Link>
+                </Link> */}
               </CardContent>
             </Card>
           )}

@@ -7,7 +7,7 @@ import {
   ExternalLinkIcon,
   LayoutDashboardIcon,
   LogOutIcon,
-  Share2Icon,
+//   Share2Icon,
   Table2Icon,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -42,7 +42,7 @@ const NAV_ITEMS = [
     url: "/dashboard/responses",
     icon: Table2Icon,
   },
-  { title: "Share survey", url: "/dashboard/share", icon: Share2Icon },
+  // { title: "Share survey", url: "/dashboard/share", icon: Share2Icon },
 ];
 
 const initials = (name: string) =>

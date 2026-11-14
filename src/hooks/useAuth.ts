@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { getApiErrorMessage } from "@/lib/axios";
+import { clearAuthToken } from "@/lib/auth-token";
 import {
   meRequest,
   signinRequest,
@@ -61,17 +62,16 @@ export function useSignup() {
 }
 
 export function useSignout() {
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: signoutRequest,
-    onSuccess: () => {
+    onSettled: () => {
+      clearAuthToken();
+      queryClient.setQueryData(authQueryKey, null);
+      queryClient.clear();
       toast.success("Signed out successfully");
-      router.replace("/signin");
-      router.refresh();
-    },
-    onError: (error) => {
-      toast.error(getApiErrorMessage(error));
+      window.location.href = "/signin";
     },
   });
 }
